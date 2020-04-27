@@ -11,6 +11,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -42,6 +43,9 @@ namespace APICatalogo
             //services.AddScoped<ApiLoggingFilter>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
             services.AddControllers().AddNewtonsoftJson(option => {
                 option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
@@ -62,6 +66,10 @@ namespace APICatalogo
 
             app.UseRouting();
 
+            //adiciona o middleware de autenticação
+            app.UseAuthentication();
+
+            //adiciona o middleware que habilita a autorização
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
