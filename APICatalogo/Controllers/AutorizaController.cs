@@ -91,7 +91,7 @@ namespace APICatalogo.Controllers
 
             //tempo de expiração
             var expiracao = _configuration["TokenConfiguration:ExpireHours"];
-            var expiration = DateTime.UtcNow.AddHours(Double.Parse(expiracao));
+            var expiration = DateTime.UtcNow.AddHours(double.Parse(expiracao));
 
             JwtSecurityToken token = new JwtSecurityToken(
                 issuer: _configuration["TokenConfiguration:Issuer"],
@@ -100,7 +100,8 @@ namespace APICatalogo.Controllers
                 expires: expiration,
                 signingCredentials: credenciais);
 
-            return new UsuarioToken() {
+            return new UsuarioToken() 
+            {
                 Authenticated = true,
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Experiention = expiration,
