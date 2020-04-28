@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace APICatalogo.Controllers
 {
-    [Authorize(AuthenticationSchemes ="Bearer")]
+    //[Authorize(AuthenticationSchemes ="Bearer")]
     [Route("api/[Controller]")]
     [ApiController]
     public class CategoriasController : ControllerBase
@@ -56,6 +56,11 @@ namespace APICatalogo.Controllers
             return categoriaDTO;
         }
 
+        /// <summary>
+        /// Obtém uma categoria pelo seu ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Objetos Categoria</returns>
         [HttpGet("{id}", Name = "ObterCategoria")]
         [EnableCors("PermitirApiRequest")]
         public ActionResult<CategoriaDTO> Get(int id)
@@ -70,6 +75,12 @@ namespace APICatalogo.Controllers
             return categoriaDTO;
         }
 
+        /// <summary>
+        /// Inclui uma nova categoria
+        /// </summary>
+        /// <param name="categoriaDto"></param>
+        /// <returns>O objeto categoria incluído</returns>
+        /// <remarks>Retorna um objeto categoria incluído</remarks>
         [HttpPost]
         public ActionResult Post([FromBody]CategoriaDTO categoriaDto)
         {
