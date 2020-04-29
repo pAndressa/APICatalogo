@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 namespace APICatalogo.Controllers
 {
     //[Authorize(AuthenticationSchemes ="Bearer")]
+    [Produces("application/json")]
     [Route("api/[Controller]")]
     [ApiController]
     public class CategoriasController : ControllerBase
@@ -93,6 +94,7 @@ namespace APICatalogo.Controllers
         }
 
         [HttpPut("{id}")]
+        [ApiConventionMethod(typeof(DefaultApiConventions),nameof(DefaultApiConventions.Put))]
         public ActionResult Put(int id, [FromBody]CategoriaDTO categoriaDto)
         {            
             if (id != categoriaDto.CategoriaId)

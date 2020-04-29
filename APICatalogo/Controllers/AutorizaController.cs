@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace APICatalogo.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[Controller]")]
     [ApiController]
     public class AutorizaController : ControllerBase

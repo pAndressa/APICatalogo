@@ -8,6 +8,8 @@ using System.Linq;
 
 namespace APICatalogo.Controllers
 {
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Produces("application/json")]
     [Route("api/[Controller]")]
     [ApiController]
     public class ProdutosController : ControllerBase
