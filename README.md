@@ -1,5 +1,5 @@
 # APICatalogo
-<p align = "justify">Criação e consumo de API - Curso Macoratti.<br> É um CRUD de um catálogo utilizando o asp net core e para consumo da API o Angular</p>
+<p align = "justify">Criação e consumo de API - Curso Macoratti.<br> É um CRUD de um catálogo utilizando o ASP.NET Core e para consumo da API o Angular</p>
 
 #### Nesse projeto é utilizado:
 - Swagger
