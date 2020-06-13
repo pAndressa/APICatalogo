@@ -1,0 +1,13 @@
+<div>
+    <h3>Login</h3>
+</div>
+<form class="exemple-container" [formGroup]="loginForm" (ngSubmit)="addLogin(loginForm.value)">
+    <mat-form-field>
+        <input matInput name="email" placeholder="Email" formControlName="email" />
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <textarea matInput name="password" placeholder="Senha" formControlName="password"></textarea>
+    </mat-form-field>
+    <button type="submit" [disabled]="!loginForm.valid" mat-button color="primary">Enviar</button>
+</form>

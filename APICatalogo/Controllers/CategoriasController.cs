@@ -3,6 +3,7 @@ using APICatalogo.DTOs;
 using APICatalogo.Models;
 using APICatalogo.Repository;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -15,8 +16,8 @@ using System.Threading.Tasks;
 
 namespace APICatalogo.Controllers
 {
-    //[Authorize(AuthenticationSchemes ="Bearer")]
-    [Produces("application/json")]
+    //[Authorize(AuthenticationSchemes ="Bearer")]    
+    //[Produces("application/json")]
     [Route("api/[Controller]")]
     [ApiController]
     public class CategoriasController : ControllerBase
@@ -31,6 +32,7 @@ namespace APICatalogo.Controllers
             //_configuration = config;
             _mapper = mapper;
         }
+
 
         //[HttpGet("autor")]
         //public string GetAutor()
@@ -56,6 +58,25 @@ namespace APICatalogo.Controllers
 
             return categoriaDTO;
         }
+
+        //[HttpGet("paginacao")]
+        //public ActionResult<IEnumerable<CategoriaDTO>> GetPaginacao(int pag = 1, int reg = 5)
+        //{
+        //    //controle para caso exceda 1000 registros
+        //    if (reg > 99)
+        //        reg = 5;
+
+        //    var categorias = _uof.CategoriaRepository.LocalizaPagina<Categoria>(pag, reg).ToList();
+
+        //    var totalRegistros = _uof.CategoriaRepository.GeraTotalRegistros();
+        //    var numeroPaginas = ((int)Math.Ceiling((double)totalRegistros / reg));
+
+        //    Response.Headers["X-Total-Registros"] = totalRegistros.ToString();
+        //    Response.Headers["X-Numero-Paginas"] = numeroPaginas.ToString();
+
+        //    var categoriasDto = _mapper.Map<List<CategoriaDTO>>(categorias);
+        //    return categoriasDto;
+        //}
 
         /// <summary>
         /// Obtém uma categoria pelo seu ID

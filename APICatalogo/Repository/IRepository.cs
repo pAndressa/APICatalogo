@@ -13,5 +13,8 @@ namespace APICatalogo.Repository
         void Add(T entity);
         void Update(T entity);
         void Delete(T entity);
+
+        List<T> LocalizaPagina<Tipo>(int pag, int tamanhoPagina)where Tipo: class;
+        int GeraTotalRegistros();
     }
 }

@@ -42,5 +42,20 @@ namespace APICatalogo.Repository
             _context.Entry(entity).State = EntityState.Modified;
             _context.Set<T>().Update(entity);
         }
+
+        public List<T> LocalizaPagina<Tipo>(int numeroPagina, int quantidadeRegistros) where Tipo : class
+        {
+            return _context.Set<T>().Skip(quantidadeRegistros * (numeroPagina - 1)).Take(quantidadeRegistros).ToList();
+        }
+
+        public int GetTotalRegistros()
+        {
+            return _context.Set<T>().AsNoTracking().Count();
+        }
+
+        public int GeraTotalRegistros()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

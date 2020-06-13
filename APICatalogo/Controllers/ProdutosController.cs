@@ -2,14 +2,16 @@
 using APICatalogo.Models;
 using APICatalogo.Repository;
 using AutoMapper;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace APICatalogo.Controllers
 {
-    [ApiConventionType(typeof(DefaultApiConventions))]
-    [Produces("application/json")]
+    [EnableQuery]
+    //[ApiConventionType(typeof(DefaultApiConventions))]
+    //[Produces("application/json")]
     [Route("api/[Controller]")]
     [ApiController]
     public class ProdutosController : ControllerBase

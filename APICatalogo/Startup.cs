@@ -11,6 +11,7 @@ using APICatalogo.Extensions;
 using APICatalogo.Filters;
 using APICatalogo.Repository;
 using AutoMapper;
+using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,12 +45,7 @@ namespace APICatalogo
                 mc.AddProfile(new MappingProfile());
             });
 
-            services.AddCors(options => 
-            {
-                options.AddPolicy("PermitirApiRequest",
-                    builder => builder.WithOrigins("https://apirequest.io/").WithMethods("GET")
-                    );        
-            });
+            services.AddCors();
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
@@ -74,6 +70,8 @@ namespace APICatalogo
                      IssuerSigningKey = new SymmetricSecurityKey(
                          Encoding.UTF8.GetBytes(Configuration["Jwt:key"]))
                  });
+
+            services.AddOData();
 
             //Swagger
             services.AddSwaggerGen(c=> 
@@ -117,6 +115,8 @@ namespace APICatalogo
             services.AddControllers().AddNewtonsoftJson(option => {
                 option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
+
+            services.AddMvc(options => options.EnableEndpointRouting = false);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -126,9 +126,12 @@ namespace APICatalogo
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            else
+            {
+                app.UseHsts();
+            }
             //adiciona o middleware do tratamento de erros
-            app.ConfigureExceptionHandler();
+            //app.ConfigureExceptionHandler();
 
             app.UseHttpsRedirection();
 
@@ -138,7 +141,7 @@ namespace APICatalogo
             app.UseAuthentication();
 
             //adiciona o middleware que habilita a autorização
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             //swagger
             app.UseSwagger();
@@ -149,12 +152,18 @@ namespace APICatalogo
             });
 
             // app.UseCors(opt=> opt.WithOrigins("https://apirequest.io/").WithMethods("GET")); se não for necessário para um controlador ou action específico, definir por aqui
-            app.UseCors();
+            app.UseCors(opt => opt.AllowAnyOrigin());
 
-            app.UseEndpoints(endpoints =>
+            app.UseMvc(options => 
             {
-                endpoints.MapControllers();
+                options.EnableDependencyInjection();
+                options.Expand().Select().Count().OrderBy().Filter();
             });
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
         }
     }
 }
